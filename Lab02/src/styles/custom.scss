@@ -1,0 +1,94 @@
+@import "./variables.scss";
+@import "../../node_modules/bootstrap/scss/bootstrap.scss";
+@import "../../node_modules/bootstrap/scss/bootstrap-grid.scss";
+
+/* That imports the entirety of bootstrap, taken from ../../node_modules/bootstrap/scss/bootstrap.scss
+ we can optimize it by only selectively including the modules we need:
+*/
+
+/* 
+ @import "functions";
+ @import "variables";
+ @import "mixins";
+ @import "root";
+ @import "reboot";
+ @import "type";
+ @import "images";
+ @import "code";
+ @import "grid";
+ @import "tables";
+ @import "forms";
+ @import "buttons";
+ @import "transitions";
+ @import "dropdown";
+ @import "button-group";
+ @import "input-group";
+ @import "custom-forms";
+ @import "nav";
+ @import "navbar";
+ @import "card";
+ @import "breadcrumb";
+ @import "pagination";
+ @import "badge";
+ @import "jumbotron";
+ @import "alert";
+ @import "progress";
+ @import "media";
+ @import "list-group";
+ @import "close";
+ @import "modal";
+ @import "tooltip";
+ @import "popover";
+ @import "carousel";
+ @import "utilities";
+ @import "print";
+ */
+
+.col-md-1, .col-lg-1, .col-md-6, .col-lg-11, .col-md-11, .col-lg-4 {
+    padding: 15px;
+}
+
+#sidebar-wrapper {
+    z-index: 1;
+    width: 100%;
+    height: 400px;
+    overflow: hidden;
+    background: #e4af1f;
+}
+
+.sidebar-nav {
+    padding: 0;
+    list-style: none;
+}
+
+.sidebar-nav li{
+    text-indent: 10px;
+    line-height: 40px;
+}
+
+.sidebar-nav li a {
+    display: block;
+    text-decoration: none;
+    color: rgb(255, 255, 255);
+}
+
+.sidebar-nav li a:hover {
+    background: #584204;
+}
+
+ .container-fluid {
+     background-color: #e4af1f;
+     padding: 0;
+ }
+
+.card {
+    padding: 15px;
+}
+
+ .card-img-top {
+     height: 190px;
+ }
+
+html {
+    font-family: 'Gill Sans', 'Gill Sans MT', Calibri, 'Trebuchet MS', sans-serif;
+}
