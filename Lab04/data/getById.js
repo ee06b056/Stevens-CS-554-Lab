@@ -11,6 +11,6 @@ module.exports = (id) => {
             } else {
                 reject(new Error("data not found"));
             }
-        }, 1000);
+        }, 5000);
     });
 };
