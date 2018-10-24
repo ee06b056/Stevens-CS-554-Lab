@@ -62,3 +62,7 @@ typings/
 
 #compression files
 *.zip
+
+#office file
+*.docx
+*.doc
