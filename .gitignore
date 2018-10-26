@@ -66,3 +66,6 @@ typings/
 #office file
 *.docx
 *.doc
+
+#pdf file
+*.pdf
