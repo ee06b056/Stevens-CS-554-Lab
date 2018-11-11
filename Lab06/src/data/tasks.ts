@@ -1,8 +1,8 @@
 import {tasks} from '../config/mongoCollections';
-import { Collection, Cursor } from 'mongodb';
+import { Collection, Cursor, InsertOneWriteOpResult } from 'mongodb';
 import {v1 as uuidv1} from 'uuid';
 
-function _boundValue (value: string, defaultValue: number, min: number, max: number): number {
+function _boundValue (value: string|undefined, defaultValue: number, min: number, max: number): number {
     if (!value) {
         return defaultValue;
     }
@@ -17,7 +17,7 @@ function _boundValue (value: string, defaultValue: number, min: number, max: num
 }
 
 const exportMethods = {
-    async getTasks (skip: string, take: string): Promise<Cursor> {
+    async getTasks (skip: string|undefined, take: string|undefined): Promise<Cursor> {
         const skip_num: number = _boundValue(skip, 0, 0, Infinity);
         const take_num: number = _boundValue(take, 20, 1, 100);
         const tasksCollection: Collection = await tasks();
@@ -30,7 +30,11 @@ const exportMethods = {
     async postTask (task: Task): Promise<Task> {
         task._id = uuidv1();
         const tasksCollection = await tasks();
-        return (await tasksCollection.insertOne(task)).ops[0];
+        const result:InsertOneWriteOpResult = await tasksCollection.insertOne(task);
+
+        console.log("result: ", result);
+        // return (await tasksCollection.insertOne(task)).ops[0];
+        return result.ops[0];
     },
     async putTask (id: string, putContent: Task): Promise<Task> {
         const tasksCollection: Collection = await tasks();

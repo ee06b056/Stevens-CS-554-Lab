@@ -31,7 +31,10 @@ const exportMethods = {
     async postTask(task) {
         task._id = uuid_1.v1();
         const tasksCollection = await mongoCollections_1.tasks();
-        return (await tasksCollection.insertOne(task)).ops[0];
+        const result = await tasksCollection.insertOne(task);
+        console.log("result: ", result);
+        // return (await tasksCollection.insertOne(task)).ops[0];
+        return result.ops[0];
     },
     async putTask(id, putContent) {
         const tasksCollection = await mongoCollections_1.tasks();
