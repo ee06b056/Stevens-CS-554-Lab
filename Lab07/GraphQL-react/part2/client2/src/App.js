@@ -1,11 +1,11 @@
 import React, { Component } from 'react';
-import './App.css';
+import QuotesContainer from './components/QuotesContainer';
 
 class App extends Component {
   render() {
     return (
       <div className="App">
-        
+        <QuotesContainer />
       </div>
     );
   }

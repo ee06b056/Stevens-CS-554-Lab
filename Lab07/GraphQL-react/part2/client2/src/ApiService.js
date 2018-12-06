@@ -1,26 +1,26 @@
 class ApiService {
 
-    constructor () {
+    constructor() {
         this.apiUrl = 'http://localhost:3001/';
         this.quoteFields = `{id, quote}`;
     }
 
-    async getQuotes (params = {}) {
+    async getQuotes(params = {}) {
         const data = await this.getGraphQlData('quotes', params, this.quoteFields);
         return data.quotes;
     }
 
-    async addQuote (params) {
+    async addQuote(params) {
         const data = await this.mutateGraphQlData('createQuote', params, this.quoteFields);
         return data.quote;
     }
 
-    async updateQuote (params) {
+    async updateQuote(params) {
         const data = await this.mutateGraphQlData('updateQuote', params, this.quoteFields);
         return data.quote;
     }
 
-    async deleteQuote (params) {
+    async deleteQuote(params) {
         const data = await this.mutateGraphQlData('deleteQuote', params, this.quoteFields);
         return data.quote;
     }
@@ -41,7 +41,7 @@ class ApiService {
                 'Content-Type': 'application/json',
                 'Accept': 'application/json',
             }),
-            body: JSON.stringify({query})
+            body: JSON.stringify({ query })
         });
         if (res.ok) {
             const body = await res.json();
@@ -51,18 +51,18 @@ class ApiService {
         }
     }
 
-    async mutateGraphQlData (resource, params, fields) {
+    async mutateGraphQlData(resource, params, fields) {
         console.log(params);
         const query = `mutation {${resource} ${this.paramsToString(params)} ${fields}}`;
         console.log(query);
         const res = await fetch(this.apiUrl, {
-            method: 'POST', 
+            method: 'POST',
             mode: 'cors',
             headers: new Headers({
                 'Content-Type': 'application/json',
                 'Accept': 'application/json',
             }),
-            body: JSON.stringify({query})
+            body: JSON.stringify({ query })
         });
         if (res.ok) {
             const body = await res.json();
@@ -79,20 +79,18 @@ class ApiService {
      */
     paramsToString(params) {
         let paramString = '';
-        if (params.constructor === Object && Object.keys(params).length) {
-            let tmp = [];
-            for (let key in params) {
-                let paramStr = params[key];
-                if(paramStr !== '') {
-                    if (typeof params[key] === 'string') {
-                        paramStr = `"${paramStr}"`;
-                    }
-                    tmp.push(`${key}:${paramStr}`);
+        let tmp = [];
+        for (let key in params) {
+            let paramStr = params[key];
+            if (paramStr !== '') {
+                if (typeof params[key] === 'string') {
+                    paramStr = `"${paramStr}"`;
                 }
+                tmp.push(`${key}:${paramStr}`);
             }
-            if (tmp.length) {
-                paramString = `(${tmp.join()})`;
-            }
+        }
+        if (tmp.length) {
+            paramString = `(input: {${tmp.join()}})`;
         }
         return paramString;
     }
