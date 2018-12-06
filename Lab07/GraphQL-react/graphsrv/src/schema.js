@@ -124,6 +124,7 @@ const TodoMutation = new GraphQLObjectType({
                 completed: {type: new GraphQLNonNull(GraphQLBoolean)}
             },
             resolve: (parent, args) => {
+                // console.log(args);
                 if (!isNaN(parseInt(args.id))) {
                     args.id = parseInt(args.id);
                 }

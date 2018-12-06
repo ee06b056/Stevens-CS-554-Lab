@@ -3,13 +3,12 @@ import TodoItem from './TodoItem';
 
 class TodoList extends React.Component {
 
-    updateHandler = async (params) => {
-        console.log('from todolist component');
-        await this.props.updateHandler(params);
+    updateHandler = (params) => {
+        this.props.updateHandler(params);
     }
 
-    deleteHandler = async () => {
-        
+    deleteHandler = (params) => {
+        this.props.deleteHandler(params);
     }
 
     render () {

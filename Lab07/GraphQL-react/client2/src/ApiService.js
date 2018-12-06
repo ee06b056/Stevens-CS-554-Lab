@@ -1,17 +1,28 @@
-/**
- * 
- * Small service for calling GraphQL API server
- */
 class ApiService {
 
-    /**
-     * define base url and field schemas here
-     * @returns {ApiService}
-     */
-    constructor() {
-        this.apiUrl = 'http://localhost:3001/graphql';
-        this.userFields = `{id, first_name, last_name, email, department, country, todo_count}`;
-        this.todoFields = `{id title completed user {first_name, last_name}}`;
+    constructor () {
+        this.apiUrl = 'http://localhost:3001/';
+        this.quoteFields = `{id, quote}`;
+    }
+
+    async getQuotes (params = {}) {
+        const data = await this.getGraphQlData('quotes', params, this.quoteFields);
+        return data.quotes;
+    }
+
+    async addQuote (params) {
+        const data = await this.mutateGraphQlData('createQuote', params, this.quoteFields);
+        return data.quote;
+    }
+
+    async updateQuote (params) {
+        const data = await this.mutateGraphQlData('updateQuote', params, this.quoteFields);
+        return data.quote;
+    }
+
+    async deleteQuote (params) {
+        const data = await this.mutateGraphQlData('deleteQuote', params, this.quoteFields);
+        return data.quote;
     }
 
     /**
@@ -20,6 +31,7 @@ class ApiService {
      * @returns {unresolved}
      */
     async getGraphQlData(resource, params, fields) {
+        console.log(params);
         const query = `query {${resource} ${this.paramsToString(params)} ${fields}}`
         console.log(query);
         const res = await fetch(this.apiUrl, {
@@ -40,6 +52,7 @@ class ApiService {
     }
 
     async mutateGraphQlData (resource, params, fields) {
+        console.log(params);
         const query = `mutation {${resource} ${this.paramsToString(params)} ${fields}}`;
         console.log(query);
         const res = await fetch(this.apiUrl, {
@@ -58,44 +71,6 @@ class ApiService {
             throw new Error(res.status);
         }
     };
-
-    async addTodo (params) {
-        const data = await this.mutateGraphQlData('addTodo', params, this.todoFields);
-        return data.todo;
-    }
-
-    async uppdateTodo (params) {
-        const data = await this.mutateGraphQlData('uppdateTodo', params, this.todoFields);
-        return data.todo;
-    }
-
-    async deleteTodo (params) {
-        console.log('params:',params);
-        const data = await this.mutateGraphQlData('deleteTodo', params, this.todoFields);
-        return data.todo;
-    }
-
-    /**
-     * 
-     * @param {object} params
-     * @returns {array} users list or empty list
-     */
-    async getUsers(params = {}) {
-        const data = await this.getGraphQlData('users', params, this.userFields);
-        //return users list
-        return data.users;
-    }
-
-    /**
-     * 
-     * @param {object} params
-     * @returns {array} todos list or empty list
-     */
-    async getTodos(params = {}) {
-        const data = await this.getGraphQlData('todos', params, this.todoFields);
-        //return todos list
-        return data.todos;
-    }
 
     /**
      * 
@@ -121,7 +96,6 @@ class ApiService {
         }
         return paramString;
     }
-
 }
 
 export default new ApiService();

@@ -13,17 +13,26 @@ class TodoItem extends React.Component {
     }
 
     handleChange = (event) => {
-        this.setState({[event.target.name]: [event.target.value]});
+        console.log(event.target.value, typeof event.target.value);
+        if (event.target.name == 'completed') {
+            const value = event.target.value == 'true' ? true : false;
+            this.setState({[event.target.name]: value});
+        } else {
+
+            this.setState({[event.target.name]: event.target.value});
+        }
+        console.log(this.state);
     }
 
     handleSubmit = (event) => {
         event.preventDefault();
-        console.log(this.state);
+        console.log("thisstate: ", this.state);
         this.props.updateHandler(this.state);
     }
 
     handleDelete = (event) => {
-
+        event.preventDefault();
+        this.props.deleteHandler({id:this.props.id});
     }
 
     render() {
@@ -51,7 +60,7 @@ class TodoItem extends React.Component {
                         <input type="submit" value="Update" />
                     </label>
                 </form>
-                <button onClick={this.props.deleteHandler}>
+                <button onClick={this.handleDelete}>
                     Delete
                 </button>
             </div>

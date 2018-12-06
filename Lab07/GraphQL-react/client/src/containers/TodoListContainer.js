@@ -46,10 +46,16 @@ class TodoListContainer extends React.Component {
         await this.getTodos();
     }
 
+    deleteHandler = async (params) => {
+        console.log('from todo container', params);
+        await ApiService.deleteTodo(params);
+        await this.getTodos();
+    }
+
     render () {
         return (
            <div className="todo">
-               <TodoList todos={this.state.todos} updateHandler={this.updateHandler}/>
+               <TodoList todos={this.state.todos} updateHandler={this.updateHandler} deleteHandler={this.deleteHandler}/>
                <Link className="todo__linkback" to='/'>Back to Users search</Link>
            </div>
         );
